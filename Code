@@ -4,31 +4,31 @@ from pybricks.ev3devices import Motor, TouchSensor, ColorSensor
 from pybricks.parameters import Port, Stop, Button, Color
 from pybricks.tools import wait
 
-Inicializar ladrillo
+# Inicializar ladrillo
 ev3 = EV3Brick()
 
-Motores
+# Motores
 motor_base = Motor(Port.C)
 motor_brazo = Motor(Port.B)
 motor_garra = Motor(Port.A)
 
-Sensores
+# Sensores
 sensor_base = TouchSensor(Port.S1)
 sensor_brazo = ColorSensor(Port.S3)
 
-Estado
+# Estado
 garra_cerrada = False
 esperando_liberar_centro = False
 garra_en_movimiento = False
 
-Ángulo límite izquierdo (por ejemplo, -180 grados)
+# Ángulo límite izquierdo (por ejemplo, -180 grados)
 LIMITE_IZQUIERDO = -6
 
-Bucle principal
+# Bucle principal
 while True:
     botones = ev3.buttons.pressed()
 
-    Motor base
+    # Motor base
     if Button.LEFT in botones:
         if motor_base.angle() > LIMITE_IZQUIERDO:
             motor_base.run(-200)
@@ -42,7 +42,7 @@ while True:
     else:
         motor_base.stop(Stop.HOLD)
 
-    Movimiento del brazo (se detiene si detecta blanco)
+    # Movimiento del brazo (se detiene si detecta blanco)
     if Button.UP in botones:
         if sensor_brazo.color() != Color.WHITE:
             motor_brazo.run(-200)
@@ -53,7 +53,7 @@ while True:
     else:
         motor_brazo.stop(Stop.HOLD)
 
-    Garra
+    # Garra
     if Button.CENTER in botones:
         if not esperando_liberar_centro and not garra_en_movimiento:
             if garra_cerrada:
